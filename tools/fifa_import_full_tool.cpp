@@ -672,6 +672,25 @@ ImportStats importTeamData(const std::string &clubsCsvPath, const std::string &p
             }
         }
 
+        // Ensure minimum of 2 goalkeepers per club
+        while (goalkeepers.size() < 2) {
+            PlayerData gk{};
+            gk.playerId = 0;
+            gk.clubId = clubId;
+            gk.name = "Goalkeeper";
+            gk.age = 24;
+            gk.positions = "GK";
+            gk.overall = 50;
+            gk.preferredFoot = "Right";
+            gk.gkDiving = 60;
+            gk.gkHandling = 60;
+            gk.gkKicking = 55;
+            gk.gkPositioning = 58;
+            gk.gkReflexes = 62;
+            gk.gkSpeed = 50;
+            goalkeepers.push_back(gk);
+        }
+
         // Sort by overall rating (highest first)
         std::sort(goalkeepers.begin(), goalkeepers.end(), [](const PlayerData &a, const PlayerData &b) {
             return a.overall > b.overall;
