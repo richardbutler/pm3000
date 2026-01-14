@@ -8,7 +8,7 @@ This document maps shirt design numbers (0-9) to their visual patterns, reverse-
 |--------|---------------------|---------------|
 | **0** | Solid / Plain | Liverpool (all red), Manchester United (all red), Everton (all blue) |
 | **1** | Vertical Stripes | Newcastle (black/white), Southampton (red/white), Stoke (red/white), Sunderland (red/white), Crystal Palace (red/blue), Sheffield United (red/white), Brentford (red/white) |
-| **2** | Horizontal Hoops | Arsenal (red with white), West Ham (claret/blue), Burnley (claret/blue), Watford (yellow/red), Derby (white/black) |
+| **2** | Sleeves/Shoulders (or Hoops) | Arsenal (red with white sleeves), West Ham (claret/blue hoops), Burnley (claret/blue), Watford, Rangers |
 | **3** | Solid with Trim/Piping | Walsall, Portsmouth (away), Burnley (away), Feyenoord, Galatasaray |
 | **4** | Halves (Vertical Split) | Blackburn Rovers (blue/white halves), West Ham (away) |
 | **5** | Quarters/Quadrants | Bristol Rovers, Wycombe Wanderers, NK Rijeka |

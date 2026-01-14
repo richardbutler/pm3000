@@ -241,7 +241,7 @@ Kit colors use 4-bit RGB (0-15 per channel):
 - Yellow: `15,15,0`
 - Green: `0,15,0`
 
-Shirt designs: `0`=solid, `1`=vertical stripes, `2`=hoops, `3`=trim, `4`=halves, `5`=quarters, `6`=center stripe, `7`=thick hoops, `8`=gradient, `9`=sash. See [docs/kit_design_patterns.md](docs/kit_design_patterns.md) for complete reference with example clubs.
+Shirt designs: `0`=solid, `1`=vertical stripes, `2`=sleeves/shoulders, `3`=trim, `4`=halves, `5`=quarters, `6`=center stripe, `7`=hoops, `8`=gradient, `9`=sash. See [docs/kit_design_patterns.md](docs/kit_design_patterns.md) for complete reference with example clubs.
 
 ### SWOS team import tool
 
