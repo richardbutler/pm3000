@@ -227,8 +227,9 @@ Plus optional detailed FIFA stats (crossing, finishing, etc.) and contract data.
 1. **Export data** from your source (spreadsheet, database, FIFA tool)
 2. **Format as two CSVs**: One for clubs, one for players
 3. **Link via club_id**: Each player row references a club
-4. **Run import**: Tool replaces all 244 teams in order
-5. **Start game**: Teams appear with custom kits and squads
+4. **Ensure each club has at least 2 goalkeepers** - import will fail otherwise
+5. **Run import**: Tool replaces all 244 teams in order
+6. **Start game**: Teams appear with custom kits and squads
 
 #### Color Reference
 

@@ -72,7 +72,7 @@ player_id,club_id,short_name,age,player_positions,overall,preferred_foot,pace,sh
 ## Notes
 
 - Maximum 3,932 players total (244 clubs × 16 players = 3,904)
-- Each club should have at least 2 goalkeepers
-- Players sorted by overall rating (top 16 per club imported)
+- **Each club MUST have at least 2 goalkeepers** - import will fail if this requirement is not met
+- Players sorted by overall rating (top N per club imported based on club's `max_players`)
 - Ages outside 16-34 will be clamped
 - Position codes: GK (goalkeeper), DF (defender), MF (midfielder), FW (forward)
