@@ -163,6 +163,82 @@ wage_eur
 club_contract_valid_until_year
 ```
 
+### FIFA Full Import Tool (244 teams with custom kits)
+
+The **FIFA Full Import Tool** accepts separate clubs and players CSV files to import all 244 teams into PM3 with complete customization including kit colors, stadiums, and managers. Unlike the standard FIFA tool, this replaces all teams (no matching) and supports multi-league imports beyond just English football.
+
+```sh
+# Build the tool
+cmake --build build --target fifa_import_full_tool
+
+# Import into save slot 1
+./build/fifa_import_full_tool --clubs teams.csv --players players.csv --pm3 /path/to/PM3 --game 1 --year 2025 --verbose
+```
+
+#### Clubs CSV Format
+
+See `docs/csv_format_clubs.md` for full details. Required columns:
+
+```
+club_id,club_name,manager_name,stadium_name,league,
+home_shirt_design,home_shirt_primary_r,home_shirt_primary_g,home_shirt_primary_b,
+home_shirt_secondary_r,home_shirt_secondary_g,home_shirt_secondary_b,
+home_shorts_r,home_shorts_g,home_shorts_b,
+home_socks_r,home_socks_g,home_socks_b
+```
+
+Optional away kit columns: `away1_*` and `away2_*` (same pattern as home kit).
+
+#### Players CSV Format
+
+See `docs/csv_format_players.md` for full details. Required columns include:
+
+```
+player_id,club_id,short_name,age,player_positions,overall,preferred_foot,
+pace,shooting,passing,dribbling,defending,physic,attacking_heading_accuracy,
+goalkeeping_diving,goalkeeping_handling,goalkeeping_kicking,goalkeeping_positioning,
+goalkeeping_reflexes,goalkeeping_speed
+```
+
+Plus optional detailed FIFA stats (crossing, finishing, etc.) and contract data.
+
+#### Key Features
+
+- **244-team support**: Import all available club slots
+- **Custom kit colors**: RGB colors (0-15) for shirts, shorts, socks with design patterns
+- **Full club metadata**: Names (16 chars), managers (16 chars), stadiums (24 chars)
+- **League assignment**: Place clubs in tiers 0-4 (Premier through Conference)
+- **No English-only filter**: Import any league structure
+- **Player linking**: Players CSV links to clubs via `club_id` foreign key
+- **Top-N selection**: Imports top players by rating (default 16, configurable with `--max-players`)
+
+#### Optional Flags
+
+- `--max-players <N>`: Players per club (1-24, default 16)
+- `--import-loans`: Enable loan period tracking
+- `--base` or `--default`: Modify default game data instead of a save slot
+- `--verbose` or `-v`: Show detailed import progress
+
+#### Example Workflow
+
+1. **Export data** from your source (spreadsheet, database, FIFA tool)
+2. **Format as two CSVs**: One for clubs, one for players
+3. **Link via club_id**: Each player row references a club
+4. **Run import**: Tool replaces all 244 teams in order
+5. **Start game**: Teams appear with custom kits and squads
+
+#### Color Reference
+
+Kit colors use 4-bit RGB (0-15 per channel):
+- Red: `15,0,0`
+- Blue: `0,0,15`
+- White: `15,15,15`
+- Black: `0,0,0`
+- Yellow: `15,15,0`
+- Green: `0,15,0`
+
+Shirt designs: `0`=solid, `1`=stripes, `2`=hoops (see PM3 docs for full list).
+
 ### SWOS team import tool
 
 The repo now vendors the SWOS `TEAM.008` parser directly (no external checkout needed). A CLI helper ships with the build to import SWOS teams/players into a PM3 save:
