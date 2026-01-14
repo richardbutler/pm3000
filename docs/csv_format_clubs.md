@@ -47,6 +47,6 @@ club_id,club_name,manager_name,stadium_name,league,max_players,home_shirt_design
 - Maximum 244 clubs
 - Colors use 4-bit values (0-15), where 0=black, 15=white
 - Common colors: Red (15,0,0), Blue (0,0,15), White (15,15,15), Black (0,0,0)
-- Shirt design: 0=solid, 1=stripes, 2=hoops, etc. (see PM3 docs for full list)
+- Shirt design: 0=solid, 1=vertical stripes, 2=hoops, 3=trim, 4=halves, 5=quarters, 6=center stripe, 7=thick hoops, 8=gradient, 9=sash (see [kit_design_patterns.md](kit_design_patterns.md) for complete reference)
 - `max_players` is optional per club - if omitted or 0, uses the global `--max-players` flag (default 16)
 - This allows flexible squad sizes: big clubs can have 20-24 players, smaller clubs 10-12 players
