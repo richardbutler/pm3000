@@ -142,3 +142,6 @@ target_include_directories(inspect_pm3_data PRIVATE src include)
 target_sources(inspect_pm3_data PRIVATE
         src/pm3_data.cpp)
 target_link_libraries(inspect_pm3_data SDL2::Main SDL2::Image SDL2::TTF nfd)
+
+add_executable(export_kit_data tools/export_kit_data.cpp)
+target_include_directories(export_kit_data PRIVATE src include)

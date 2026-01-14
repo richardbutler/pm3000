@@ -286,6 +286,32 @@ cmake --build build --target inspect_pm3_data
 
 This outputs every `club_index`, `top_scorer`, and league table entry in a basic, predictable format that can later be grepped or diffed while keeping manual edits minimal.
 
+## Exporting kit data
+
+`export_kit_data` reads `clubdata.dat` and exports all club kit information including design patterns and colors. This is useful for reverse-engineering what shirt design numbers correspond to which patterns.
+
+```sh
+# Build the tool
+g++ -std=c++17 -I src -I include tools/export_kit_data.cpp -o build/export_kit_data
+
+# Export all club kits in human-readable format
+./build/export_kit_data --pm3 /path/to/PM3
+
+# Export as CSV for analysis
+./build/export_kit_data --pm3 /path/to/PM3 --csv > kits.csv
+```
+
+**Reverse-engineering kit design patterns:**
+
+By exporting kit data from the original PM3 game files, you can identify what design numbers correspond to which patterns by examining well-known clubs:
+
+- Arsenal: Red shirt with white sleeves (likely design value for "sleeves" pattern)
+- Blackburn: Blue and white halves (likely design value for "halves" pattern)
+- Celtic: Green and white hoops (design value 2 for "hoops")
+- Newcastle: Black and white stripes (design value 1 for "vertical stripes")
+
+Once you export the data, cross-reference the design values with the visual appearance of clubs you know to build a complete mapping of design numbers to patterns.
+
 ## Acknowledgements
 Special thanks to [@eb4x](https://www.github.com/eb4x) for the https://github.com/eb4x/pm3 project. PM3000 would not exist without it.
 
