@@ -236,6 +236,7 @@ struct ClubData {
     std::string manager;
     std::string stadium;
     int league; // 0-4
+    int maxPlayers; // Max players to import for this club (1-24)
 
     struct Kit {
         uint8_t design;
@@ -283,13 +284,17 @@ struct PlayerData {
 };
 
 // Parse club CSV row
-std::optional<ClubData> parseClubRow(const ColumnMap &cols, const std::vector<std::string> &row) {
+std::optional<ClubData> parseClubRow(const ColumnMap &cols, const std::vector<std::string> &row, int defaultMaxPlayers) {
     ClubData club;
     club.clubId = parseNumber(getField(cols, row, "club_id"));
     club.name = sanitizeName(getField(cols, row, "club_name"));
     club.manager = sanitizeName(getField(cols, row, "manager_name"));
     club.stadium = sanitizeName(getField(cols, row, "stadium_name"));
     club.league = parseNumber(getField(cols, row, "league"));
+
+    // Read max_players column, or use default if not provided
+    int maxPlayersValue = parseNumber(getField(cols, row, "max_players"));
+    club.maxPlayers = (maxPlayersValue > 0) ? std::clamp(maxPlayersValue, 1, 24) : defaultMaxPlayers;
 
     if (club.name.empty() || club.clubId == 0) {
         return std::nullopt;
@@ -578,7 +583,7 @@ struct ImportStats {
 
 // Main import function
 ImportStats importTeamData(const std::string &clubsCsvPath, const std::string &playersCsvPath,
-                           int baseYear, bool verbose, bool importLoans, int maxPlayersPerClub,
+                           int baseYear, bool verbose, bool importLoans, int defaultMaxPlayersPerClub,
                            gamea &gameDataOut, gameb &clubDataOut, gamec &playerDataOut) {
     ImportStats stats;
 
@@ -603,7 +608,7 @@ ImportStats importTeamData(const std::string &clubsCsvPath, const std::string &p
     while (std::getline(clubsIn, line)) {
         if (line.empty()) continue;
         auto fields = splitCsv(line);
-        auto club = parseClubRow(clubsColMap, fields);
+        auto club = parseClubRow(clubsColMap, fields, defaultMaxPlayersPerClub);
         if (!club) continue;
 
         clubs[club->clubId] = *club;
@@ -746,9 +751,10 @@ ImportStats importTeamData(const std::string &clubsCsvPath, const std::string &p
         if (playersIt != clubPlayers.end()) {
             const auto &players = playersIt->second;
             int assigned = 0;
+            int clubMaxPlayers = clubData.maxPlayers; // Use per-club limit
 
             for (const auto &playerData : players) {
-                if (assigned >= maxPlayersPerClub) {
+                if (assigned >= clubMaxPlayers) {
                     ++stats.playersSkipped;
                     continue;
                 }
@@ -772,7 +778,7 @@ ImportStats importTeamData(const std::string &clubsCsvPath, const std::string &p
 
             if (verbose && assigned > 0) {
                 std::cout << "  [" << pm3ClubIdx << "] " << clubData.name
-                          << ": " << assigned << " players\n";
+                          << ": " << assigned << " players (max: " << clubMaxPlayers << ")\n";
             }
         }
 

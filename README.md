@@ -180,12 +180,14 @@ cmake --build build --target fifa_import_full_tool
 See `docs/csv_format_clubs.md` for full details. Required columns:
 
 ```
-club_id,club_name,manager_name,stadium_name,league,
+club_id,club_name,manager_name,stadium_name,league,max_players,
 home_shirt_design,home_shirt_primary_r,home_shirt_primary_g,home_shirt_primary_b,
 home_shirt_secondary_r,home_shirt_secondary_g,home_shirt_secondary_b,
 home_shorts_r,home_shorts_g,home_shorts_b,
 home_socks_r,home_socks_g,home_socks_b
 ```
+
+Note: `max_players` is optional - omit or set to 0 to use the global `--max-players` default.
 
 Optional away kit columns: `away1_*` and `away2_*` (same pattern as home kit).
 
@@ -210,14 +212,15 @@ Plus optional detailed FIFA stats (crossing, finishing, etc.) and contract data.
 - **League assignment**: Place clubs in tiers 0-4 (Premier through Conference)
 - **No English-only filter**: Import any league structure
 - **Player linking**: Players CSV links to clubs via `club_id` foreign key
-- **Top-N selection**: Imports top players by rating (default 16, configurable with `--max-players`)
+- **Flexible squad sizes**: Per-club `max_players` column (1-24) or global default via `--max-players`
+- **Top-N selection**: Imports top players by rating for each club
 
 #### Optional Flags
 
-- `--max-players <N>`: Players per club (1-24, default 16)
+- `--max-players <N>`: Default players per club when `max_players` column is omitted (1-24, default 16)
 - `--import-loans`: Enable loan period tracking
 - `--base` or `--default`: Modify default game data instead of a save slot
-- `--verbose` or `-v`: Show detailed import progress
+- `--verbose` or `-v`: Show detailed import progress (includes per-club squad sizes)
 
 #### Example Workflow
 
